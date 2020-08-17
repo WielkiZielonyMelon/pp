@@ -3,9 +3,9 @@ import sys
 import pygame
 pygame.init()
 
-from menu import Menu
-from menu_item import MenuItem
-from menu_renderer import MenuRenderer
+from menu.menu import Menu
+from menu.menu_item import MenuItem
+from menu.menu_renderer import MenuRenderer
 
 resolution = (1024, 768)
 screen = pygame.display.set_mode(resolution)
