@@ -1,22 +1,18 @@
 import sys
 
 import pygame
-pygame.init()
 
+import translation
 from menu.menu_controller import MenuController
-
-
 from menu.menu_item import MenuItem
 from menu.menu_renderer import MenuRenderer
 
 
 def get_main_menu(language):
-    if language == 'Polski':
-        return [MenuItem('New game', 'Nowa gra'), MenuItem('Load game', 'Wczytaj grę'), MenuItem('Scores', 'Wyniki'),
-                MenuItem('Quit', 'Wyjdź')]
-    if language == 'English':
-        return [MenuItem('New game', 'New game'), MenuItem('Load game', 'Load game'), MenuItem('Scores', 'Scores'),
-                MenuItem('Quit', 'Quit')]
+    if language == translation.polski_key:
+        return translation.polski_menu_items
+    if language == translation.english_key:
+        return translation.english_menu_items
 
     raise Exception(f'Not yet translated to {language}')
 
@@ -25,7 +21,7 @@ def menu_selection(menu_controller):
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return MenuItem('Quit')
+                return MenuItem('Quit', 'Quit')
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     sys.exit(0)
@@ -40,7 +36,7 @@ def menu_selection(menu_controller):
 
 
 def generate_language_menu_controller(screen):
-    menu_items = ([MenuItem('Polski', 'Polski'), MenuItem('English', 'English'), MenuItem('Deutsch', 'Deutsch')])
+    menu_items = translation.language_selection_items
     menu_renderer = MenuRenderer(screen, len(menu_items))
     menu_controller = MenuController(menu_items, menu_renderer)
 
@@ -56,6 +52,7 @@ def generate_main_menu_controller(screen, language_item):
 
 
 def main():
+    pygame.init()
     resolution = (1024, 768)
     screen = pygame.display.set_mode(resolution)
 
