@@ -27,3 +27,6 @@ class MenuController:
             self.index += 1
 
         self.index = 0
+
+    def get_menu_item(self):
+        return self.menu_items[self.index]
