@@ -7,30 +7,14 @@ inactive_menu_selection_color = (50, 50, 50)
 
 
 class MenuRenderer:
-    def __init__(self, screen, menu):
+    def __init__(self, screen, menu_items_len):
         self.screen = screen
-        self.menu = menu
+        self.menu_items_len = menu_items_len
+        self.menu_spacing = self.screen.get_height() / (1 + self.menu_items_len)
 
-    def render_menu_element(self, active):
-        self.screen.fill(pygame.Color("black"), (10, self.menu.current_position*100, 110, default_font_size))
-        surface = menu_font.render(self.menu.menu_items[self.menu.current_position].name, True,
+    def render_menu_item(self, menu_item, index, active):
+        self.screen.fill(pygame.Color("black"), (0, (index + 1) * self.menu_spacing, self.screen.get_width(),
+                                                 default_font_size))
+        surface = menu_font.render(menu_item.name, True,
                                    active_menu_selection_color if active else inactive_menu_selection_color)
-        self.screen.blit(surface, dest=(10, self.menu.current_position*100))
-
-    def down(self):
-        self.render_menu_element(False)
-        self.menu.down()
-        self.render_menu_element(True)
-
-    def up(self):
-        self.render_menu_element(False)
-        self.menu.up()
-        self.render_menu_element(True)
-
-    def render(self):
-        self.menu.current_position = 0
-        self.render_menu_element(True)
-        self.menu.down()
-        while self.menu.current_position != 0:
-            self.render_menu_element(False)
-            self.menu.down()
+        self.screen.blit(surface, dest=(10, (index + 1) * self.menu_spacing))

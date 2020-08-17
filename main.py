@@ -1,18 +1,21 @@
 import sys
 
 import pygame
+
+from menu.menu_controller import MenuController
+
 pygame.init()
 
-from menu.menu import Menu
 from menu.menu_item import MenuItem
 from menu.menu_renderer import MenuRenderer
 
 resolution = (1024, 768)
 screen = pygame.display.set_mode(resolution)
 
-menu = Menu([MenuItem('Polski'), MenuItem('English'), MenuItem('Deutsch')])
-menu_renderer = MenuRenderer(screen, menu)
-menu_renderer.render()
+menu_items = ([MenuItem('Polski'), MenuItem('English'), MenuItem('Deutsch')])
+menu_renderer = MenuRenderer(screen, len(menu_items))
+menu_controller = MenuController(menu_items, menu_renderer)
+menu_controller.render()
 
 while True:
     for event in pygame.event.get():
@@ -20,9 +23,9 @@ while True:
             sys.exit(0)
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
-                menu_renderer.down()
+                menu_controller.down()
             elif event.key == pygame.K_UP:
-                menu_renderer.up()
+                menu_controller.up()
             elif event.key == pygame.K_ESCAPE:
                 sys.exit(0)
 
