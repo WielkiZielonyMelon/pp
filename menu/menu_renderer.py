@@ -13,8 +13,11 @@ class MenuRenderer:
         self.menu_spacing = self.screen.get_height() / (1 + self.menu_items_len)
 
     def render_menu_item(self, menu_item, index, active):
-        self.screen.fill(pygame.Color("black"), (0, (index + 1) * self.menu_spacing, self.screen.get_width(),
+        y_offset = (index + 1) * self.menu_spacing
+        self.screen.fill(pygame.Color("black"), (0, y_offset, self.screen.get_width(),
                                                  default_font_size))
         surface = menu_font.render(menu_item.name, True,
                                    active_menu_selection_color if active else inactive_menu_selection_color)
-        self.screen.blit(surface, dest=(10, (index + 1) * self.menu_spacing))
+
+        x_offset = (self.screen.get_width() - surface.get_width()) / 2
+        self.screen.blit(surface, dest=(x_offset, y_offset))
