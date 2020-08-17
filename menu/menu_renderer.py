@@ -18,7 +18,7 @@ class MenuRenderer:
         self.screen.fill(pygame.Color("black"), (0, y_offset, self.screen.get_width(),
                                                  default_font_size))
 
-        surface = menu_font.render(menu_item.name, True,
+        surface = menu_font.render(menu_item.display, True,
                                    active_menu_selection_color if active else inactive_menu_selection_color)
 
         x_offset = (self.screen.get_width() - surface.get_width()) / 2
